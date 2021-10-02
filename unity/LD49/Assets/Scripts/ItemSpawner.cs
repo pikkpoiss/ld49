@@ -5,9 +5,11 @@ using UnityEngine;
 public class ItemSpawner : MonoBehaviour {
   public GameObject itemPrefab;
   public float startHeight = 8.0f;
-
+  public const string SpawnZone = "SpawnZone";
   public const string SpawnButton = "Fire1";
-  // Start is called before the first frame update
+
+  private SpawnZone spawnZone;
+
   void Start() {
     var count = Random.Range(3,6);
     for (var i = 0; i < count; i++) {
@@ -15,9 +17,8 @@ public class ItemSpawner : MonoBehaviour {
     }
   }
 
-  // Update is called once per frame
   void Update() {
-    if (itemPrefab && Input.GetButtonDown(SpawnButton)) {
+    if (itemPrefab && spawnZone && spawnZone.IsDropEnabled && Input.GetButtonDown(SpawnButton)) {
       Spawn(startHeight);
     }
   }
@@ -29,6 +30,18 @@ public class ItemSpawner : MonoBehaviour {
     if (instanceBody) {
       instanceBody.WakeUp();
       instanceBody.AddForce(Vector3.down * 4.0f, ForceMode.VelocityChange);
+    }
+  }
+
+  void OnTriggerEnter(Collider collider) {
+    if (collider.CompareTag(SpawnZone)) {
+      spawnZone = collider.GetComponent<SpawnZone>();
+    }
+  }
+
+  void OnTriggerExit(Collider collider) {
+    if (collider.CompareTag(SpawnZone)) {
+      spawnZone = null;
     }
   }
 }

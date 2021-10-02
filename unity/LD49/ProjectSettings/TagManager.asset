@@ -7,11 +7,12 @@ TagManager:
   - Ground
   - Obstacle
   - Goal
+  - SpawnZone
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Gameplay
   - Water
   - UI
   - 
