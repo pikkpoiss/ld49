@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class GameSplashState : MonoBehaviour, IGameState {
   public GameObject quitButton;
-  private GameStateManager stateManager;
+  public const string AdvanceButton = "Fire1";
 
-  private bool keyWasDown = false;
+  private GameStateManager stateManager;
 
   public void Register(GameStateManager states) {
     stateManager = states;
@@ -30,13 +30,8 @@ public class GameSplashState : MonoBehaviour, IGameState {
   }
 
   public void StateUpdate(GameStateManager states) {
-    if (Input.anyKey) {
-      keyWasDown = true;
-    }
-    if (!Input.anyKey && keyWasDown) {
-      if (!Input.GetMouseButtonDown(0) && Input.touchCount == 0) {
-        Advance();
-      }
+    if (Input.GetButtonUp(AdvanceButton)) {
+      Advance();
     }
   }
 }
