@@ -13,11 +13,12 @@ public class BuildingRandomizer : MonoBehaviour {
     transform.localScale = scale;
 
     // Randomize position;
-    transform.position.Set(
+    var newPosition = new Vector3(
       transform.position.x + Random.Range(positionRange.x, positionRange.y),
       scale.y / 2.0f,
       transform.position.z + Random.Range(positionRange.x, positionRange.y)
     );
+    transform.position = newPosition;
 
     // Randomize color;
     var renderer = gameObject.GetComponent<MeshRenderer>();

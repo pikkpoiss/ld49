@@ -23,16 +23,9 @@ public class PlayerController : MonoBehaviour {
 
   void Start() {
     body = GetComponent<Rigidbody>();
-    Debug.Log(string.Format("Player location {0}", transform.position));
   }
 
   void FixedUpdate() {
-    float horizontalInput = Input.GetAxisRaw("Horizontal");
-    float verticalInput = Input.GetAxisRaw("Vertical");
-    Vector3 adj = new Vector3(horizontalInput, 0.0f, verticalInput);
-
-    Debug.Log(string.Format("Player location {0}", transform.position));
-
     if (inputDirection.sqrMagnitude >= 0.01f) {
       Vector3 camDirection = Camera.main.transform.rotation * inputDirection;
       targetDirection.Set(camDirection.x, 0, camDirection.z);
@@ -59,6 +52,7 @@ public class PlayerController : MonoBehaviour {
 
   void OnTriggerEnter(Collider collider) {
     if (collider.CompareTag(ObstacleTag)) {
+      Debug.Log("Player hit an obstacle!");
       hitCollider = true;
     } else if (collider.CompareTag(GoalTag)) {
       Debug.Log("Player hit the goal!");
