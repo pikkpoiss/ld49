@@ -30,3 +30,19 @@ Gameplay:
 * Stack items on top of character, items respond to physics.
 * Navigation on some kind of gameplay mesh.
 
+## TODO
+- [ ] Buildings / town layout
+- [ ] Go to factory to get packages
+- [ ] Deliver packages
+- [ ] Keep track of time and delivery count
+- [ ] Cycle days
+- [ ] Lose state - miss daily delivery limit
+- [ ] Win state - get to end of week
+- [ ] Sound effects
+- [ ] Text bubbles - "Get this important cat ear medicine to Mrs. Smith!"
+- [ ] Model car
+- [ ] Model packages
+- [ ] Model buildings
+- [ ] Model factory
+- [ ] Model roads
+- [ ] Random obstacles - e.g. cars driving around town
