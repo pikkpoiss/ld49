@@ -255,6 +255,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 181769763}
+  - component: {fileID: 181769764}
   m_Layer: 5
   m_Name: GamePlayHUD
   m_TagString: Untagged
@@ -284,6 +285,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &181769764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181769762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1d2f22fcacb254e9ceefdd3df76691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeText: {fileID: 2110624329}
+  moneyText: {fileID: 677996283}
+  deliveriesText: {fileID: 2042187081}
 --- !u!1 &360097170
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,6 +511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc6ed83e96507b4388b25d6411b9a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hud: {fileID: 181769764}
 --- !u!114 &529966207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,7 +569,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &533134323
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1844,7 +1861,7 @@ MonoBehaviour:
   endState: {fileID: 360097172}
   splashState: {fileID: 533134324}
   canvas: {fileID: 1065294796}
-  unityEditorShowStartup: 0
+  unityEditorShowStartup: 1
 --- !u!4 &1994023724
 Transform:
   m_ObjectHideFlags: 0

@@ -13,9 +13,8 @@ public class GameEndState : MonoBehaviour, IGameState {
 
   public void Register(GameStateManager states) { }
   public void Unregister(GameStateManager states) { }
-
-  public void Start() {
-  }
+  public void OnCurrentEnter() { }
+  public void OnCurrentExit() { }
 
   public void StateUpdate(GameStateManager states) {
     if (!gameObject.activeSelf) {

@@ -14,6 +14,9 @@ public class GameSplashState : MonoBehaviour, IGameState {
     stateManager = null;
   }
 
+  public void OnCurrentEnter() { }
+  public void OnCurrentExit() { }
+
   public void Start() {
     if (Game.instance.ShowStartup) {
       Game.instance.states.PushState(this);
