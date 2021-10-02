@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
   private Rigidbody body;
   private Vector3 targetDirection = Vector3.zero;
   private Vector3 inputDirection = Vector3.zero;
+  private Vector3 startLocation;
   private float speed = 0.0f;
   private bool hitCollider = false;
 
@@ -23,6 +24,9 @@ public class PlayerController : MonoBehaviour {
 
   void Start() {
     body = GetComponent<Rigidbody>();
+    if (body) {
+      startLocation = body.transform.position;
+    }
   }
 
   void FixedUpdate() {
@@ -55,5 +59,9 @@ public class PlayerController : MonoBehaviour {
       hitCollider = true;
     } else if (collider.CompareTag(GoalTag)) {
     }
+  }
+
+  public void Reset() {
+    body.MovePosition(startLocation);
   }
 }

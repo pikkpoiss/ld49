@@ -35,6 +35,17 @@ public class Game : MonoBehaviour {
     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
   }
 
+  public void ResetLevel() {
+    var players = FindObjectsOfType<PlayerController>();
+    for (var i = 0; i < players.Length; i++) {
+      players[i].Reset();
+    }
+    var items = FindObjectsOfType<Item>();
+    for (var i = 0; i < items.Length; i++) {
+      Destroy(items[i].gameObject);
+    }
+  }
+
   private void Awake() {
     if (instance == null) {
       instance = this;
