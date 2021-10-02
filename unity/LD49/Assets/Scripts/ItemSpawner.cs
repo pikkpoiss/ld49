@@ -6,6 +6,7 @@ public class ItemSpawner : MonoBehaviour {
   public GameObject itemPrefab;
   public float startHeight = 8.0f;
 
+  public const string SpawnButton = "Fire1";
   // Start is called before the first frame update
   void Start() {
     var count = Random.Range(3,6);
@@ -16,7 +17,7 @@ public class ItemSpawner : MonoBehaviour {
 
   // Update is called once per frame
   void Update() {
-    if (itemPrefab && Input.GetKeyDown(KeyCode.Alpha1)) {
+    if (itemPrefab && Input.GetButtonDown(SpawnButton)) {
       Spawn(startHeight);
     }
   }
