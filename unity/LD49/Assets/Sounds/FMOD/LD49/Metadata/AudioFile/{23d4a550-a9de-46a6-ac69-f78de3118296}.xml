@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{23d4a550-a9de-46a6-ac69-f78de3118296}">
+		<property name="assetPath">
+			<value>LD49 - Main Theme.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>64.078367346938776</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{897923eb-29cf-44b2-908a-4800e2cf3bdd}</destination>
+		</relationship>
+	</object>
+</objects>
