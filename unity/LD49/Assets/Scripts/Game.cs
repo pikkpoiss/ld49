@@ -9,6 +9,7 @@ public class Game : MonoBehaviour {
   public GamePlayState playState;
   public GameEndState endState;
   public GameSplashState splashState;
+  public Canvas canvas;
 
   public bool unityEditorShowStartup = false;
   public bool ShowStartup {
@@ -47,6 +48,8 @@ public class Game : MonoBehaviour {
     states = new GameStateManager();
     states.PushState(playState);
     splashState.gameObject.SetActive(true);
+
+    canvas.gameObject.SetActive(true);
   }
 
   private void Update() {
