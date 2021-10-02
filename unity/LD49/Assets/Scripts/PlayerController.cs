@@ -23,12 +23,15 @@ public class PlayerController : MonoBehaviour {
 
   void Start() {
     body = GetComponent<Rigidbody>();
+    Debug.Log(string.Format("Player location {0}", transform.position));
   }
 
   void FixedUpdate() {
     float horizontalInput = Input.GetAxisRaw("Horizontal");
     float verticalInput = Input.GetAxisRaw("Vertical");
     Vector3 adj = new Vector3(horizontalInput, 0.0f, verticalInput);
+
+    Debug.Log(string.Format("Player location {0}", transform.position));
 
     if (inputDirection.sqrMagnitude >= 0.01f) {
       Vector3 camDirection = Camera.main.transform.rotation * inputDirection;

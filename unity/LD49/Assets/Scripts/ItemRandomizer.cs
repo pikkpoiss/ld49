@@ -25,9 +25,10 @@ public class ItemRandomizer : MonoBehaviour {
     transform.Rotate(Vector3.up, Random.Range(rotationRange.x, rotationRange.y));
 
     // Randomize position;
-    var position = transform.position;
+    var position = new Vector3();
     position.x = Random.Range(positionRange.x, positionRange.y);
     position.z = Random.Range(positionRange.x, positionRange.y);
+    transform.position += position;
 
     // Randomize color;
     var renderer = gameObject.GetComponent<MeshRenderer>();

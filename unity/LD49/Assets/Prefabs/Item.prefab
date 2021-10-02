@@ -144,7 +144,7 @@ MonoBehaviour:
   scaleRange: {x: 0.7, y: 1.3}
   massRange: {x: 0.94, y: 1.74}
   rotationRange: {x: -1, y: 1}
-  positionRange: {x: -0.1, y: 0.1}
+  positionRange: {x: -0.01, y: 0.01}
 --- !u!114 &-5399274649248314006
 MonoBehaviour:
   m_ObjectHideFlags: 0
