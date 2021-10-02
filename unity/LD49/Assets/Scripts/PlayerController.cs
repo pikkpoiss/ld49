@@ -52,10 +52,8 @@ public class PlayerController : MonoBehaviour {
 
   void OnTriggerEnter(Collider collider) {
     if (collider.CompareTag(ObstacleTag)) {
-      Debug.Log("Player hit an obstacle!");
       hitCollider = true;
     } else if (collider.CompareTag(GoalTag)) {
-      Debug.Log("Player hit the goal!");
     }
   }
 }
