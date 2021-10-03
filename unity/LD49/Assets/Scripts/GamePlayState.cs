@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public struct LevelInfo {
@@ -23,6 +24,8 @@ public class GamePlayState : GameStateMonoBehavior {
   private int currentDeliveriesTarget;
   private int currentPackages;
   private int currentPackagesTarget;
+
+  private bool hasWon;
 
   private int currentLevel = 0;
   private LevelInfo[] levels = {
@@ -53,6 +56,7 @@ public class GamePlayState : GameStateMonoBehavior {
     timeRemaining = level.Seconds;
     currentDeliveries = 0;
     currentDeliveriesTarget = level.Deliveries;
+    hasWon = false;
     StartBuilding();
   }
 
@@ -89,21 +93,33 @@ public class GamePlayState : GameStateMonoBehavior {
   }
 
   private void CheckWinConditions() {
+    if (hasWon) {
+      return;
+    }
     if (currentDeliveries >= currentDeliveriesTarget) {
-      Debug.Log("Won!");
-      musicManager.PlayVictoryMusic();
-      currentLevel += 1;
-      if (currentLevel >= levels.Length) {
-        SetGameState(gameCompletedState);
-        Debug.Log("Won game!");
-      } else {
-        SetGameState(gameLevelCompletedState);
-        StartLevel();
-      }
+      hasWon = true;
+      StartCoroutine(HandleLevelCompleted());
+    }
+  }
+
+  private IEnumerator HandleLevelCompleted() {
+    Debug.Log("Won!");
+    musicManager.PlayVictoryMusic();
+    yield return new WaitForSeconds(1.0f);
+    currentLevel += 1;
+    if (currentLevel >= levels.Length) {
+      SetGameState(gameCompletedState);
+      Debug.Log("Won game!");
+    } else {
+      SetGameState(gameLevelCompletedState);
+      StartLevel();
     }
   }
 
   private void CheckLoseConditions() {
+    if (hasWon) {
+      return;
+    }
     if (timeRemaining <= 0.0f) {
       Debug.Log("Lost!");
       musicManager.PlayFailureMusic();
