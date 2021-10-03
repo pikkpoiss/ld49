@@ -581,7 +581,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115247429}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 5, y: 6, z: 4}
@@ -3471,14 +3471,12 @@ GameObject:
   - component: {fileID: 529966201}
   - component: {fileID: 529966200}
   - component: {fileID: 529966203}
-  - component: {fileID: 529966204}
   - component: {fileID: 529966205}
   - component: {fileID: 529966208}
-  - component: {fileID: 529966207}
   - component: {fileID: 529966206}
-  - component: {fileID: 529966209}
   - component: {fileID: 529966211}
   - component: {fileID: 529966210}
+  - component: {fileID: 529966204}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3511,8 +3509,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.2, y: 0.9, z: 1.1}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!23 &529966201
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3574,11 +3572,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50a06b92b2fc742ebb4edbab6467a0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSpeed: 5
-  moveSpeed: 0.004
-  slowdownRate: 0.1
-  autoBrakeTime: 0.5
-  autobrakeCurve:
+  turnSpeed: 4
+  maxSpeed: 15
+  accelerationTime: 2
+  brakingTime: 1
+  accelerationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -3593,8 +3591,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -3602,28 +3600,55 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!195 &529966204
-NavMeshAgent:
+  brakingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -3.0579123
+      outSlope: -3.0579123
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.1125
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.07738496
+      outSlope: -0.07738496
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.31666666
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &529966204
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529966198}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef93e3d40c2d3743ba45fd58c763b03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  createSpring: 0
+  maxBreakForce: 400
+  minBreakForce: 100
+  springForce: 1500
+  maxStackDepth: 10
+  breakForceCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  wasStacked: 0
+  stackDepth: 0
 --- !u!54 &529966205
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3632,13 +3657,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529966198}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 15
   m_Drag: 1
-  m_AngularDrag: 0.05
+  m_AngularDrag: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &529966206
 MonoBehaviour:
@@ -3658,20 +3683,6 @@ MonoBehaviour:
   gameCompletedState: {fileID: 516083782}
   gameEndState: {fileID: 360097172}
   musicManager: {fileID: 529966210}
---- !u!114 &529966207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529966198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cef93e3d40c2d3743ba45fd58c763b03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wasStacked: 0
-  stackDepth: 0
 --- !u!114 &529966208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3686,19 +3697,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 3816094081880542840, guid: 9a1f77c895c684544b9750bc44f9de8b, type: 3}
   startHeight: 8
---- !u!135 &529966209
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529966198}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.7
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &529966210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5672,6 +5670,10 @@ PrefabInstance:
     - target: {fileID: 4480888555582373541, guid: d03b5caa95662144fb514636e09fc50f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8883838831673791481, guid: d03b5caa95662144fb514636e09fc50f, type: 3}
+      propertyPath: heightRange.y
+      value: 8.09
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d03b5caa95662144fb514636e09fc50f, type: 3}
@@ -12553,8 +12555,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 16.742535, y: 5.268401, z: 7.934313}
-  m_Center: {x: 0.21514702, y: 2.134201, z: 0.16397476}
+  m_Size: {x: 16.742535, y: 5.268401, z: 8.205603}
+  m_Center: {x: 0.21514702, y: 2.134201, z: 0.29961944}
 --- !u!1001 &1749986669
 PrefabInstance:
   m_ObjectHideFlags: 0

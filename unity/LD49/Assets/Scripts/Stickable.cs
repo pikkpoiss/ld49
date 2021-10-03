@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Stickable : MonoBehaviour {
+  public bool createSpring = true;
+  public float maxBreakForce = 400.0f;
+  public float minBreakForce = 100.0f;
+  public float springForce = 1500.0f;
+  public float maxStackDepth = 10;
+  public AnimationCurve breakForceCurve;
+
   public bool wasStacked = false;
   public int stackDepth = 0;
   public int StackDepth {
@@ -37,9 +44,19 @@ public class Stickable : MonoBehaviour {
     stackDepth = stickable.stackDepth + 1;
     spring = gameObject.AddComponent<SpringJoint>();
     spring.autoConfigureConnectedAnchor = true;
-    spring.spring = 1000.0f;
+    spring.spring = springForce;
+
     spring.enableCollision = true;
     spring.connectedBody = collision.gameObject.GetComponent<Rigidbody>();
-    spring.breakForce = Mathf.Clamp(200.0f - (stackDepth * 40.0f), 20.0f, 200.0f);
+    var pct = stackDepth / maxStackDepth;
+    spring.breakForce = Mathf.Lerp(maxBreakForce, minBreakForce, breakForceCurve.Evaluate(pct));
+  }
+
+  public void DestroySpring() {
+    var spring = GetComponent<SpringJoint>();
+    if (spring) {
+      spring.connectedBody = null;
+      Destroy(spring);
+    }
   }
 }

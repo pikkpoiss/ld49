@@ -17,6 +17,8 @@ public class Item : MonoBehaviour {
 
   private bool touchedGoal = false;
   private bool touchedGround = false;
+  private bool playCollisionSound = false;
+  private bool playGoalSound = false;
   private Stickable stickable;
 
   public List<AudioClip> collisionSounds;
@@ -31,22 +33,46 @@ public class Item : MonoBehaviour {
     audioSource = GetComponent<AudioSource>();
   }
 
+  void Update() {
+    if (playCollisionSound) {
+      PlayCollisionSound();
+      playCollisionSound = false;
+    }
+    if (playGoalSound) {
+      PlayGoalSound();
+      playGoalSound = false;
+    }
+  }
+
   void OnCollisionEnter(Collision collision) {
     if (collision.collider.CompareTag(GroundTag)) {
       touchedGround = true;
+      var stickable = GetComponent<Stickable>();
+      if (stickable) {
+        stickable.DestroySpring();
+      }
       StartCoroutine(AnimateDeath());
-      PlayCollisionSound();
-    } else if (collision.collider.CompareTag(GoalTag)) {
-      touchedGoal = true;
-      StartCoroutine(AnimateGoal(collision.collider.transform.position));
-      PlayGoalSound();
+      playCollisionSound = true;
     } else if (collision.collider.CompareTag(PlayerTag)) {
-      PlayCollisionSound();
+    }
+  }
+
+  void OnTriggerEnter(Collider collider) {
+    if (collider.CompareTag(GoalTag)) {
+      touchedGoal = true;
+      var stickable = GetComponent<Stickable>();
+      if (stickable) {
+        stickable.DestroySpring();
+      }
+      StartCoroutine(AnimateGoal(collider.transform.position));
+      playGoalSound = true;
     }
   }
 
   private IEnumerator AnimateGoal(Vector3 destination) {
     var body = GetComponent<Rigidbody>();
+    var boxCollider = GetComponent<BoxCollider>();
+    boxCollider.enabled = false;
     body.isKinematic = true;
     float elapsed = 0.0f;
     Vector3 start = transform.position;
@@ -87,16 +113,14 @@ public class Item : MonoBehaviour {
     Destroy(gameObject);
   }
 
-  private void PlayCollisionSound()
-  {
+  private void PlayCollisionSound() {
     int index = Random.Range(0, collisionSounds.Count);
     collisionSound = collisionSounds[index];
     audioSource.clip = collisionSound;
     audioSource.Play();
   }
 
-  private void PlayGoalSound()
-  {
+  private void PlayGoalSound() {
     audioSource.clip = goalSound;
     audioSource.Play();
   }

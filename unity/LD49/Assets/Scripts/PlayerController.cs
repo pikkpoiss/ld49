@@ -13,17 +13,19 @@ public class PlayerController : MonoBehaviour {
   private AudioSource audioSource;
   private float speed = 0.0f;
   private bool hitCollider = false;
-  private float autobrakeElapsed = 0.0f;
-  private float autobrakeStartSpeed = 0.0f;
+  private float speedElapsed = 0.0f;
+  private bool isAccelerating = false;
+  private float startSpeed;
 
   public const string ObstacleTag = "Obstacle";
   public const string GoalTag = "Goal";
 
   public float turnSpeed = 20.0f;
-  public float moveSpeed = 0.01f;
-  public float slowdownRate = 0.1f;
-  public float autoBrakeTime = 1.0f;
-  public AnimationCurve autobrakeCurve;
+  public float maxSpeed = 1.0f;
+  public float accelerationTime = 1.0f;
+  public float brakingTime = 1.0f;
+  public AnimationCurve accelerationCurve;
+  public AnimationCurve brakingCurve;
 
   public Vector3 InputDirection {
     set => this.inputDirection = value;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour {
   }
 
   void FixedUpdate() {
+    var pct = 0.0f;
     if (inputDirection.sqrMagnitude >= 0.01f) {
       Vector3 camDirection = Camera.main.transform.rotation * inputDirection;
       targetDirection.Set(camDirection.x, 0, camDirection.z);
@@ -48,35 +51,56 @@ public class PlayerController : MonoBehaviour {
         Quaternion.LookRotation(targetDirection),
         Time.fixedDeltaTime * turnSpeed
       ));
-      speed += moveSpeed;
-      autobrakeElapsed = 0.0f;
-      autobrakeStartSpeed = speed;
+      if (!isAccelerating) {
+        isAccelerating = true;
+        speedElapsed = 0.0f;
+        startSpeed = speed;
+      }
+      speedElapsed += Time.fixedDeltaTime;
+      speedElapsed = Mathf.Clamp(speedElapsed, 0.0f, accelerationTime);
+      pct = speedElapsed / accelerationTime;
+      speed = Mathf.Lerp(startSpeed, maxSpeed, accelerationCurve.Evaluate(pct));
     } else {
-      autobrakeElapsed += Time.fixedDeltaTime;
-      var pct = autobrakeElapsed / autoBrakeTime;
-      speed = Mathf.Lerp(autobrakeStartSpeed, 0.0f,  autobrakeCurve.Evaluate(pct));
+      if (isAccelerating) {
+        isAccelerating = false;
+        speedElapsed = 0.0f;
+        startSpeed = speed;
+      }
+      speedElapsed += Time.fixedDeltaTime;
+      speedElapsed = Mathf.Clamp(speedElapsed, 0.0f, brakingTime);
+      pct = speedElapsed / brakingTime;
+      speed = Mathf.Lerp(startSpeed, 0.0f, brakingCurve.Evaluate(pct));
     }
-
     if (hitCollider) {
-      // Bounce back.
-      speed = -speed * 0.5f;
-      body.MovePosition(body.position + body.rotation * (Vector3.forward * speed));
       hitCollider = false;
-    } else {
-      // Normal movement.
-      body.MovePosition(body.position + body.rotation * (Vector3.forward * speed));
+      if (body.isKinematic) {
+        // Bounce back.
+        speed = speed * -0.5f;
+        startSpeed = speed;
+        speedElapsed = 0.0f;
+      }
     }
+    body.velocity = body.rotation * Vector3.forward * speed;
+    body.MovePosition(body.position + (body.velocity * Time.fixedDeltaTime));
 
-    if (Input.GetKeyDown(KeyCode.H))
-    {
+
+    if (Input.GetKeyDown(KeyCode.H)) {
       audioSource.Play();
+    }
+  }
+
+  void OnCollisionEnter(Collision collision) {
+    if (collision.collider.CompareTag(ObstacleTag)) {
+      hitCollider = true;
     }
   }
 
   void OnTriggerEnter(Collider collider) {
     if (collider.CompareTag(ObstacleTag)) {
       hitCollider = true;
-    } else if (collider.CompareTag(GoalTag)) {
+      var collisionPoint = collider.ClosestPointOnBounds(body.position);
+      var reverseVector = (body.position - collisionPoint).normalized;
+      body.position = collisionPoint + reverseVector * 1.6f; // Just a magic number.
     }
   }
 

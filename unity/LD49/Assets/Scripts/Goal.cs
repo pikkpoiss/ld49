@@ -69,9 +69,9 @@ public class Goal : MonoBehaviour {
     }
   }
 
-  void OnCollisionEnter(Collision collision) {
-    if (collision.collider.CompareTag(ItemTag)) {
-      var item = collision.collider.gameObject.GetComponent<Item>();
+  void OnTriggerEnter(Collider collider) {
+    if (collider.CompareTag(ItemTag)) {
+      var item = collider.gameObject.GetComponent<Item>();
       if (state && item) {
         state.ReportDelivery(item);
       }
