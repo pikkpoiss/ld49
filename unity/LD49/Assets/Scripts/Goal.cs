@@ -9,10 +9,13 @@ public class Goal : MonoBehaviour {
   private Icon icon;
   public GamePlayState state;
   public TextMeshPro buildingText;
+  public AudioSource audioSource;
+  private bool playGoalSound = false;
 
   void Start() {
     boxCollider = GetComponent<BoxCollider>();
     icon = GetComponentInChildren<Icon>();
+    audioSource = GetComponent<AudioSource>();
 
     SetBuildingText("");
     PickBuilding();
@@ -22,6 +25,11 @@ public class Goal : MonoBehaviour {
     // TODO: Remove before shipping!
     if (Input.GetKeyUp(KeyCode.Alpha2)) {
       PickBuilding();
+    }
+
+    if (playGoalSound) {
+      audioSource.Play();
+      playGoalSound = false;
     }
   }
 
@@ -74,6 +82,7 @@ public class Goal : MonoBehaviour {
       var item = collider.gameObject.GetComponent<Item>();
       if (state && item) {
         state.ReportDelivery(item);
+        playGoalSound = true;
       }
     }
   }
