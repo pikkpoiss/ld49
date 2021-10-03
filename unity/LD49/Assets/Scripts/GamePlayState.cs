@@ -158,25 +158,26 @@ public class GamePlayState : GameStateMonoBehavior {
   }
 
   public override void StateUpdate(GameStateManager states) {
-    float horizontalInput = Input.GetAxisRaw("Horizontal");
-    float verticalInput = Input.GetAxisRaw("Vertical");
-    Vector3 adj = new Vector3(horizontalInput, 0.0f, verticalInput);
-    playerController.InputDirection = adj;
+    if (!hasWon) {
+      float horizontalInput = Input.GetAxisRaw("Horizontal");
+      float verticalInput = Input.GetAxisRaw("Vertical");
+      Vector3 adj = new Vector3(horizontalInput, 0.0f, verticalInput);
+      playerController.InputDirection = adj;
 
-    // Debug stuff - safe to leave in since this should be disabled in builds.
-    if (Game.instance.DebugEnabled) {
-      if (Input.GetKeyUp(KeyCode.F9)) {
-        currentPackages += 1;
+      // Debug stuff - safe to leave in since this should be disabled in builds.
+      if (Game.instance.DebugEnabled) {
+        if (Input.GetKeyUp(KeyCode.F9)) {
+          currentPackages += 1;
+        }
+        if (Input.GetKeyUp(KeyCode.F10)) {
+          currentDeliveries += 1;
+        }
+        if (Input.GetKeyUp(KeyCode.F11)) {
+          timeRemaining -= 5;
+        }
       }
-      if (Input.GetKeyUp(KeyCode.F10)) {
-        currentDeliveries += 1;
-      }
-      if (Input.GetKeyUp(KeyCode.F11)) {
-        timeRemaining -= 5;
-      }
+      timeRemaining -= Time.deltaTime;
     }
-
-    timeRemaining -= Time.deltaTime;
     UpdateHUD();
     UpdateGoal();
     CheckPackageConditions();
