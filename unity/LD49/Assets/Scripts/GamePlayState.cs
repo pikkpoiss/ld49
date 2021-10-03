@@ -126,6 +126,10 @@ public class GamePlayState : GameStateMonoBehavior {
     if (hud) {
       hud.gameObject.SetActive(true);
     }
+    if (timeRemaining > 0.0f && currentLevel < levels.Length)
+    {
+      musicManager.ResetMusic();
+    }
   }
 
   public override void OnCurrentExit() {
