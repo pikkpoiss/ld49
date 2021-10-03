@@ -5,6 +5,9 @@ using UnityEngine;
 public class Stickable : MonoBehaviour {
   public bool wasStacked = false;
   public int stackDepth = 0;
+  public int StackDepth {
+    get => stackDepth;
+  }
 
   void Start() {
   }

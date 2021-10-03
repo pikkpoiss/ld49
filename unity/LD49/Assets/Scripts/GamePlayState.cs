@@ -2,29 +2,36 @@ using UnityEngine;
 
 public struct LevelInfo {
   public float Seconds;
-  public float Deliveries;
+  public int Deliveries;
+  public int MinPackages;
+  public int MaxPackages;
 }
 
 [RequireComponent(typeof(PlayerController))]
 public class GamePlayState : MonoBehaviour, IGameState {
   public GamePlayHUD hud;
+  public Goal goal;
 
   private PlayerController playerController;
   private float timeRemaining;
   private float totalMoney;
-  private float deliveries;
+
+  private int currentDeliveries;
+  private int currentDeliveriesTarget;
+  private int currentPackages;
+  private int currentPackagesTarget;
+
   private int currentLevel = 0;
   private LevelInfo[] levels = {
-    new LevelInfo(){ Seconds = 30, Deliveries = 5 },
-    new LevelInfo(){ Seconds = 40, Deliveries = 8 },
+    new LevelInfo(){ Seconds = 30, Deliveries = 5, MinPackages = 1, MaxPackages = 3 },
+    new LevelInfo(){ Seconds = 40, Deliveries = 8, MinPackages = 2, MaxPackages = 5 },
   };
   private LevelInfo level { get => levels[currentLevel]; }
 
   private void Start() {
     playerController = GetComponent<PlayerController>();
     if (hud) {
-      hud.gameObject.SetActive(false);
-      hud.SetMoneyText("$0.00");
+      hud.gameObject.SetActive(true);
     }
     totalMoney = 0.0f;
     StartLevel();
@@ -32,6 +39,18 @@ public class GamePlayState : MonoBehaviour, IGameState {
 
   private void StartLevel() {
     timeRemaining = level.Seconds;
+    currentDeliveries = 0;
+    currentDeliveriesTarget = level.Deliveries;
+    StartBuilding();
+  }
+
+  private void StartBuilding() {
+    currentPackages = 0;
+    currentPackagesTarget = Random.Range(level.MinPackages, level.MaxPackages);
+    if (goal) {
+      goal.PickBuilding();
+      UpdateGoal();
+    }
   }
 
   private void UpdateHUD() {
@@ -40,11 +59,18 @@ public class GamePlayState : MonoBehaviour, IGameState {
     }
     hud.SetTimeText(string.Format("{0:F1}s", timeRemaining));
     hud.SetMoneyText(string.Format("${0:F2}", totalMoney));
-    hud.SetDeliveriesText(string.Format("{0}/{1} deliveries", deliveries, level.Deliveries));
+    hud.SetDeliveriesText(string.Format("{0}/{1} deliveries", currentDeliveries, currentDeliveriesTarget));
+  }
+
+  private void UpdateGoal() {
+    if (!goal) {
+      return;
+    }
+    goal.SetBuildingText(string.Format("{0}/{1}", currentPackages, currentPackagesTarget));
   }
 
   private void CheckWinConditions() {
-    if (deliveries >= level.Deliveries) {
+    if (currentDeliveries >= currentDeliveriesTarget) {
       Debug.Log("Won!");
       currentLevel += 1;
       if (currentLevel >= levels.Length) {
@@ -87,5 +113,16 @@ public class GamePlayState : MonoBehaviour, IGameState {
     UpdateHUD();
     CheckWinConditions();
     CheckLoseConditions();
+  }
+
+  public void ReportDelivery(Item item) {
+    currentPackages += 1;
+    totalMoney += item.GetValue();
+    if (currentPackages >= currentPackagesTarget) {
+      currentDeliveries += 1;
+      StartBuilding();
+    } else {
+      UpdateGoal();
+    }
   }
 }

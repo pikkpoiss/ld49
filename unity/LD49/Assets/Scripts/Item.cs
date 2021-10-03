@@ -15,9 +15,16 @@ public class Item : MonoBehaviour {
   public AnimationCurve goalMoveCurve;
 
   private bool touchedGoal = false;
+  private bool touchedGround = false;
+  private Stickable stickable;
+
+  void Start() {
+    stickable = GetComponent<Stickable>();
+  }
 
   void OnCollisionEnter(Collision collision) {
     if (collision.collider.CompareTag(GroundTag)) {
+      touchedGround = true;
       StartCoroutine(AnimateDeath());
     } else if (collision.collider.CompareTag(GoalTag)) {
       touchedGoal = true;
@@ -65,5 +72,12 @@ public class Item : MonoBehaviour {
       yield return new WaitForEndOfFrame();
     }
     Destroy(gameObject);
+  }
+
+  public float GetValue() {
+    var baseRate = 20.0f;
+    var depthBonus = 10.0f * (stickable ? stickable.StackDepth : 0);
+    var damageAdjustment = touchedGround ? 0.5f : 1.0f;
+    return (baseRate + depthBonus) * damageAdjustment;
   }
 }

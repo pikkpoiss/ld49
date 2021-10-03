@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Goal : MonoBehaviour {
+  public const string ItemTag = "Item";
   private BoxCollider boxCollider;
   private Icon icon;
+  public GamePlayState state;
+  public TextMeshPro buildingText;
 
   void Start() {
     boxCollider = GetComponent<BoxCollider>();
     icon = GetComponentInChildren<Icon>();
 
+    SetBuildingText("");
     PickBuilding();
   }
 
@@ -46,8 +51,36 @@ public class Goal : MonoBehaviour {
     );
 
     // Move the icon above the top of the collider.
-    var iconPosition = icon.transform.position;
-    iconPosition.y = boxCollider.size.y + 1.0f;
-    icon.transform.position = iconPosition;
+    if (icon) {
+      var iconPosition = icon.transform.position;
+      iconPosition.y = boxCollider.size.y + 1.0f;
+      icon.transform.position = iconPosition;
+    }
+
+    // Move the building text.
+    if (buildingText) {
+      var textPosition = buildingText.transform.position;
+      textPosition.y = boxCollider.size.y + 2.0f;
+      buildingText.transform.position = textPosition;
+    }
+  }
+
+  void OnCollisionEnter(Collision collision) {
+    if (collision.collider.CompareTag(ItemTag)) {
+      var item = collision.collider.gameObject.GetComponent<Item>();
+      if (state && item) {
+        state.ReportDelivery(item);
+      }
+    }
+  }
+
+  public void SetBuildingText(string text) {
+    if (text != "") {
+      buildingText.gameObject.SetActive(true);
+      buildingText.text = text;
+      buildingText.gameObject.transform.rotation = Camera.main.transform.rotation;
+    } else {
+      buildingText.gameObject.SetActive(false);
+    }
   }
 }
