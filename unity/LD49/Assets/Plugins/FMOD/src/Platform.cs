@@ -653,9 +653,9 @@ namespace FMODUnity
             get
             {
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
-                return Overlay != TriStateBool.Disabled;
+                return false;
 #else
-                return Overlay == TriStateBool.Enabled;
+                return false;
 #endif
             }
         }
