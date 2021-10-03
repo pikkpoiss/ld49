@@ -896,6 +896,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hud: {fileID: 181769764}
   goal: {fileID: 115247432}
+  gameLevelCompletedState: {fileID: 842370610}
+  gameCompletedState: {fileID: 516083782}
+  gameEndState: {fileID: 360097172}
 --- !u!114 &529966207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3282,7 +3285,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 4e-45}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0

@@ -8,9 +8,12 @@ public struct LevelInfo {
 }
 
 [RequireComponent(typeof(PlayerController))]
-public class GamePlayState : MonoBehaviour, IGameState {
+public class GamePlayState : GameStateMonoBehavior {
   public GamePlayHUD hud;
   public Goal goal;
+  public GameLevelCompletedState gameLevelCompletedState;
+  public GameCompletedState gameCompletedState;
+  public GameEndState gameEndState;
 
   private PlayerController playerController;
   private float timeRemaining;
@@ -27,6 +30,7 @@ public class GamePlayState : MonoBehaviour, IGameState {
     new LevelInfo(){ Seconds = 40, Deliveries = 8, MinPackages = 2, MaxPackages = 5 },
   };
   private LevelInfo level { get => levels[currentLevel]; }
+  private GameStateManager states;
 
   private void Start() {
     playerController = GetComponent<PlayerController>();
@@ -38,6 +42,7 @@ public class GamePlayState : MonoBehaviour, IGameState {
   }
 
   private void StartLevel() {
+    Game.instance.ResetLevel();
     timeRemaining = level.Seconds;
     currentDeliveries = 0;
     currentDeliveriesTarget = level.Deliveries;
@@ -69,13 +74,22 @@ public class GamePlayState : MonoBehaviour, IGameState {
     goal.SetBuildingText(string.Format("{0}/{1}", currentPackages, currentPackagesTarget));
   }
 
+  private void CheckPackageConditions() {
+    if (currentPackages >= currentPackagesTarget) {
+      currentDeliveries += 1;
+      StartBuilding();
+    }
+  }
+
   private void CheckWinConditions() {
     if (currentDeliveries >= currentDeliveriesTarget) {
       Debug.Log("Won!");
       currentLevel += 1;
       if (currentLevel >= levels.Length) {
+        SetGameState(gameCompletedState);
         Debug.Log("Won game!");
       } else {
+        SetGameState(gameLevelCompletedState);
         StartLevel();
       }
     }
@@ -84,33 +98,53 @@ public class GamePlayState : MonoBehaviour, IGameState {
   private void CheckLoseConditions() {
     if (timeRemaining <= 0.0f) {
       Debug.Log("Lost!");
+      SetGameState(gameEndState);
     }
   }
 
-  public void Register(GameStateManager states) {}
+  public override void Register(GameStateManager s) {
+    states = s;
+  }
 
-  public void Unregister(GameStateManager states) {}
+  public override void Unregister(GameStateManager s) {
+    states = null;
+  }
 
-  public void OnCurrentEnter() {
+  public override void OnCurrentEnter() {
     if (hud) {
       hud.gameObject.SetActive(true);
     }
   }
 
-  public void OnCurrentExit() {
+  public override void OnCurrentExit() {
     if (hud) {
       hud.gameObject.SetActive(false);
     }
   }
 
-  public void StateUpdate(GameStateManager states) {
+  public override void StateUpdate(GameStateManager states) {
     float horizontalInput = Input.GetAxisRaw("Horizontal");
     float verticalInput = Input.GetAxisRaw("Vertical");
     Vector3 adj = new Vector3(horizontalInput, 0.0f, verticalInput);
     playerController.InputDirection = adj;
 
+    // Debug stuff - safe to leave in since this should be disabled in builds.
+    if (Game.instance.DebugEnabled) {
+      if (Input.GetKeyUp(KeyCode.F9)) {
+        currentPackages += 1;
+      }
+      if (Input.GetKeyUp(KeyCode.F10)) {
+        currentDeliveries += 1;
+      }
+      if (Input.GetKeyUp(KeyCode.F11)) {
+        timeRemaining -= 5;
+      }
+    }
+
     timeRemaining -= Time.deltaTime;
     UpdateHUD();
+    UpdateGoal();
+    CheckPackageConditions();
     CheckWinConditions();
     CheckLoseConditions();
   }
@@ -118,11 +152,12 @@ public class GamePlayState : MonoBehaviour, IGameState {
   public void ReportDelivery(Item item) {
     currentPackages += 1;
     totalMoney += item.GetValue();
-    if (currentPackages >= currentPackagesTarget) {
-      currentDeliveries += 1;
-      StartBuilding();
-    } else {
-      UpdateGoal();
+  }
+
+  private void SetGameState(GameStateMonoBehavior state) {
+    state.gameObject.SetActive(true);
+    if (states != null) {
+      states.PushState(state);
     }
   }
 }

@@ -1,42 +1,37 @@
 using UnityEngine;
 
-public class GameCompletedState : MonoBehaviour, IGameState {
+public class GameCompletedState : GameStateMonoBehavior {
   public GameObject quitButton;
   public const string AdvanceButton = "Fire1";
 
   private GameStateManager stateManager;
 
-  public void Register(GameStateManager states) {
+  public override void Register(GameStateManager states) {
     stateManager = states;
   }
 
-  public void Unregister(GameStateManager states) {
+  public override void Unregister(GameStateManager states) {
     stateManager = null;
   }
 
-  public void Start() {
+  public void Awake() {
     gameObject.SetActive(false);
   }
 
-  public void OnCurrentEnter() {
+  public override void OnCurrentEnter() {
     gameObject.SetActive(true);
     Time.timeScale = 0.0f;
   }
 
-  public void OnCurrentExit() {
+  public override void OnCurrentExit() {
     gameObject.SetActive(false);
     Time.timeScale = 1.0f;
   }
 
-  public void Advance() {
-    stateManager.PopState();
-    gameObject.SetActive(false);
-    Time.timeScale = 1.0f;
-  }
-
-  public void StateUpdate(GameStateManager states) {
+  public override void StateUpdate(GameStateManager states) {
     if (Input.GetButtonUp(AdvanceButton)) {
-      stateManager.PopState();
+      states.PopState();
+      Game.instance.Reload();
     }
   }
 }

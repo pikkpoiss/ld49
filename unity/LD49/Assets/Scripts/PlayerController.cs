@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
   private Vector3 targetDirection = Vector3.zero;
   private Vector3 inputDirection = Vector3.zero;
   private Vector3 startLocation;
+  private Quaternion startRotation;
   private AudioSource audioSource;
   private float speed = 0.0f;
   private bool hitCollider = false;
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour {
     body = GetComponent<Rigidbody>();
     if (body) {
       startLocation = body.transform.position;
+      startRotation = body.transform.rotation;
     }
 
     audioSource = GetComponent<AudioSource>();
@@ -70,6 +72,12 @@ public class PlayerController : MonoBehaviour {
   }
 
   public void Reset() {
+    Debug.Log("Player reset");
     body.MovePosition(startLocation);
+    body.MoveRotation(startRotation);
+    gameObject.transform.position = startLocation;
+    gameObject.transform.rotation = startRotation;
+    inputDirection = Vector3.zero;
+    speed = 0.0f;
   }
 }

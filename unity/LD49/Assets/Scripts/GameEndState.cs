@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameEndState : MonoBehaviour, IGameState {
+public class GameEndState : GameStateMonoBehavior {
   public Text pointsText;
   private float elapsed = 0.0f;
   public float minimumDelay = 1.0f;
 
-  void Start() {
+  void Awake() {
     gameObject.SetActive(false);
   }
 
@@ -15,12 +15,12 @@ public class GameEndState : MonoBehaviour, IGameState {
     Game.instance.states.PushState(this);
   }
 
-  public void Register(GameStateManager states) { }
-  public void Unregister(GameStateManager states) { }
-  public void OnCurrentEnter() { }
-  public void OnCurrentExit() { }
+  public override void Register(GameStateManager states) { }
+  public override void Unregister(GameStateManager states) { }
+  public override void OnCurrentEnter() { }
+  public override void OnCurrentExit() { }
 
-  public void StateUpdate(GameStateManager states) {
+  public override void StateUpdate(GameStateManager states) {
     if (!gameObject.activeSelf) {
       states.PopState();
     }

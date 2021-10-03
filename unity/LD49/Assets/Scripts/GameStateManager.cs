@@ -9,6 +9,14 @@ public interface IGameState {
   void OnCurrentExit();
 }
 
+public abstract class GameStateMonoBehavior : MonoBehaviour, IGameState {
+  public abstract void OnCurrentEnter();
+  public abstract void OnCurrentExit();
+  public abstract void Register(GameStateManager states);
+  public abstract void StateUpdate(GameStateManager states);
+  public abstract void Unregister(GameStateManager states);
+}
+
 public class GameStateManager {
   private LinkedList<IGameState> states_;
 

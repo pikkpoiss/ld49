@@ -22,6 +22,16 @@ public class Game : MonoBehaviour {
     }
   }
 
+  public bool DebugEnabled {
+    get {
+#if UNITY_EDITOR
+      return true;
+#else
+      return false;
+#endif
+    }
+  }
+
   public void End() {
     endState.gameObject.SetActive(true);
     states.PushState(endState);
