@@ -42,9 +42,9 @@ public class Goal : MonoBehaviour {
 
     // Scale the collider bigger than the building.
     boxCollider.size = new Vector3(
-      dim.x + 2.0f,
+      dim.x + 4.0f,
       dim.y + 1.0f,
-      dim.z + 2.0f
+      dim.z + 4.0f
     );
 
     // Move the object to where the building is, and adjust collider y position.

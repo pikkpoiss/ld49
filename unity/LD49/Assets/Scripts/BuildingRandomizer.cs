@@ -21,7 +21,7 @@ public class BuildingRandomizer : MonoBehaviour {
     transform.position = newPosition;
 
     // Randomize color;
-    var renderer = gameObject.GetComponent<MeshRenderer>();
+    var renderer = gameObject.GetComponentInChildren<MeshRenderer>();
     renderer.material.color = Random.ColorHSV(0.0f, 0.1f);
   }
 }
