@@ -32,13 +32,13 @@ Gameplay:
 
 ## TODO
 - [ ] Buildings / town layout
-- [ ] Go to factory to get packages
-- [ ] Deliver packages
-- [ ] Keep track of time and delivery count
-- [ ] Cycle days
-- [ ] Lose state - miss daily delivery limit
-- [ ] Win state - get to end of week
-- [ ] Sound effects
+- [x] Go to factory to get packages
+- [x] Deliver packages
+- [x] Keep track of time and delivery count
+- [x] Cycle days
+- [x] Lose state - miss daily delivery limit
+- [x] Win state - get to end of week
+- [x] Sound effects
 - [ ] Text bubbles - "Get this important cat ear medicine to Mrs. Smith!"
 - [ ] Model car
 - [ ] Model packages
