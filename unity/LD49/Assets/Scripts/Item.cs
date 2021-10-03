@@ -6,6 +6,7 @@ public class Item : MonoBehaviour {
 
   public const string GroundTag = "Ground";
   public const string GoalTag = "Goal";
+  public const string PlayerTag = "Player";
 
   public Material fadeMaterial;
 
@@ -18,17 +19,29 @@ public class Item : MonoBehaviour {
   private bool touchedGround = false;
   private Stickable stickable;
 
+  public List<AudioClip> collisionSounds;
+  public AudioSource audioSource;
+
+  public AudioClip goalSound;
+
+  private AudioClip collisionSound;
+
   void Start() {
     stickable = GetComponent<Stickable>();
+    audioSource = GetComponent<AudioSource>();
   }
 
   void OnCollisionEnter(Collision collision) {
     if (collision.collider.CompareTag(GroundTag)) {
       touchedGround = true;
       StartCoroutine(AnimateDeath());
+      PlayCollisionSound();
     } else if (collision.collider.CompareTag(GoalTag)) {
       touchedGoal = true;
       StartCoroutine(AnimateGoal(collision.collider.transform.position));
+      PlayGoalSound();
+    } else if (collision.collider.CompareTag(PlayerTag)) {
+      PlayCollisionSound();
     }
   }
 
@@ -72,6 +85,20 @@ public class Item : MonoBehaviour {
       yield return new WaitForEndOfFrame();
     }
     Destroy(gameObject);
+  }
+
+  private void PlayCollisionSound()
+  {
+    int index = Random.Range(0, collisionSounds.Count);
+    collisionSound = collisionSounds[index];
+    audioSource.clip = collisionSound;
+    audioSource.Play();
+  }
+
+  private void PlayGoalSound()
+  {
+    audioSource.clip = goalSound;
+    audioSource.Play();
   }
 
   public float GetValue() {
