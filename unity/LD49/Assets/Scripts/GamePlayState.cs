@@ -66,6 +66,7 @@ public class GamePlayState : GameStateMonoBehavior {
     if (goal) {
       goal.PickBuilding();
       UpdateGoal();
+      hud.SetDispatchText();
     }
   }
 
