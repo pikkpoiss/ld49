@@ -30,6 +30,7 @@ public class Goal : MonoBehaviour {
     var randomBuilding = buildings[Random.Range(0, buildings.Length)];
     var dim = randomBuilding.GetDimensions();
     var pos = randomBuilding.GetPosition();
+    var rot = randomBuilding.GetRotation();
 
     // Scale the collider bigger than the building.
     boxCollider.size = new Vector3(
@@ -49,6 +50,9 @@ public class Goal : MonoBehaviour {
       boxCollider.size.y / 2.0f,
       0.0f
     );
+
+    // Rotate the goal to match the building.
+    transform.rotation = rot;
 
     // Move the icon above the top of the collider.
     if (icon) {
