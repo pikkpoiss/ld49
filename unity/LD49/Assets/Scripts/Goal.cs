@@ -60,7 +60,7 @@ public class Goal : MonoBehaviour {
     // Move the building text.
     if (buildingText) {
       var textPosition = buildingText.transform.position;
-      textPosition.y = boxCollider.size.y + 2.0f;
+      textPosition.y = boxCollider.size.y + 4.0f;
       buildingText.transform.position = textPosition;
     }
   }
