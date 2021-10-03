@@ -6,6 +6,8 @@ public class BuildingRandomizer : MonoBehaviour {
   [MinMaxSlider(1.0f, 10.0f, FlexibleFields = true)] public Vector2 heightRange = new Vector2(2.0f, 5.0f);
   [MinMaxSlider(-1.0f, 1.0f)] public Vector2 positionRange = new Vector2(-0.1f, 0.1f);
 
+  public Color[] colors;
+
   void Awake() {
     // Randomize scale;
     var scale = transform.localScale;
@@ -22,6 +24,10 @@ public class BuildingRandomizer : MonoBehaviour {
 
     // Randomize color;
     var renderer = gameObject.GetComponentInChildren<MeshRenderer>();
-    renderer.material.color = Random.ColorHSV(0.0f, 0.1f);
+    if (colors.Length > 0) {
+      renderer.material.color = colors[Random.Range(0, colors.Length)];
+    } else {
+      renderer.material.color = Random.ColorHSV(0.0f, 0.1f);
+    }
   }
 }
