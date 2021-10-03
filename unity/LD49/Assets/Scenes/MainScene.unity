@@ -3761,6 +3761,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 3816094081880542840, guid: 9a1f77c895c684544b9750bc44f9de8b, type: 3}
   startHeight: 8
+  state: {fileID: 529966206}
 --- !u!65 &529966209
 BoxCollider:
   m_ObjectHideFlags: 0

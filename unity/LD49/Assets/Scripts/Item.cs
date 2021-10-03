@@ -25,6 +25,8 @@ public class Item : MonoBehaviour {
 
   private AudioClip collisionSound;
 
+  public GamePlayState state;
+
   void Start() {
     stickable = GetComponent<Stickable>();
     audioSource = GetComponent<AudioSource>();
@@ -102,6 +104,9 @@ public class Item : MonoBehaviour {
       color.a = Mathf.Lerp(1.0f, 0.0f, pct);
       renderer.material.color = color;
       yield return new WaitForEndOfFrame();
+    }
+    if (state) {
+      state.ReportLoss(this);
     }
     Destroy(gameObject);
   }

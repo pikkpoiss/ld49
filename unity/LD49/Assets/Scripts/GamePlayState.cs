@@ -190,6 +190,10 @@ public class GamePlayState : GameStateMonoBehavior {
     totalMoney += item.GetValue();
   }
 
+  public void ReportLoss(Item item) {
+    totalMoney -= 5.0f;
+  }
+
   private void SetGameState(GameStateMonoBehavior state) {
     state.gameObject.SetActive(true);
     if (states != null) {

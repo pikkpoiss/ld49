@@ -7,6 +7,7 @@ public class ItemSpawner : MonoBehaviour {
   public float startHeight = 8.0f;
   public const string SpawnZone = "SpawnZone";
   public const string SpawnButton = "Fire1";
+  public GamePlayState state;
 
   private SpawnZone spawnZone;
 
@@ -30,6 +31,10 @@ public class ItemSpawner : MonoBehaviour {
     if (instanceBody) {
       instanceBody.WakeUp();
       instanceBody.AddForce(Vector3.down * 4.0f, ForceMode.VelocityChange);
+    }
+    var item = instance.GetComponent<Item>();
+    if (item) {
+      item.state = state;
     }
   }
 
