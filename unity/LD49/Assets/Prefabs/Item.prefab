@@ -216,12 +216,11 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   collisionSounds:
-  - {fileID: 8300000, guid: 9947555b7b3004449ae7d01754c55bac, type: 3}
-  - {fileID: 8300000, guid: 35910d1ad53704e348e08002546f1007, type: 3}
-  - {fileID: 8300000, guid: 6d4c4111b16b84f90aca78554b78227d, type: 3}
-  - {fileID: 8300000, guid: 2226bb9b427044323baabb7207291c77, type: 3}
+  - {fileID: 8300000, guid: 07bcbfbfdc0de445b9d73542758797ff, type: 3}
+  - {fileID: 8300000, guid: b48459e193b4d4065b7e08f68cc2c6b3, type: 3}
+  - {fileID: 8300000, guid: a10f9302c5e23444b9c12a02308b6c76, type: 3}
+  - {fileID: 8300000, guid: 096e43525fdb2499a9b0503f7b06476b, type: 3}
   audioSource: {fileID: 0}
-  goalSound: {fileID: 8300000, guid: 8febe57a7c6a54e5286f72b5f51ca616, type: 3}
 --- !u!82 &-7721944793692793437
 AudioSource:
   m_ObjectHideFlags: 0
