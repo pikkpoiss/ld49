@@ -4608,7 +4608,7 @@ PrefabInstance:
     - target: {fileID: -4700725489559409698, guid: aa5f0261523a7ba4fbc88e4a284077c6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b4fed8a631a3f4169acad680eb8fb8a9, type: 2}
+      objectReference: {fileID: 6321576253106569660, guid: aa5f0261523a7ba4fbc88e4a284077c6, type: 3}
     - target: {fileID: 919132149155446097, guid: aa5f0261523a7ba4fbc88e4a284077c6, type: 3}
       propertyPath: m_Name
       value: Van
