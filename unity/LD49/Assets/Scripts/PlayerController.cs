@@ -13,12 +13,17 @@ public class PlayerController : MonoBehaviour {
   private AudioSource audioSource;
   private float speed = 0.0f;
   private bool hitCollider = false;
+  private float autobrakeElapsed = 0.0f;
+  private float autobrakeStartSpeed = 0.0f;
 
   public const string ObstacleTag = "Obstacle";
   public const string GoalTag = "Goal";
 
   public float turnSpeed = 20.0f;
   public float moveSpeed = 0.01f;
+  public float slowdownRate = 0.1f;
+  public float autoBrakeTime = 1.0f;
+  public AnimationCurve autobrakeCurve;
 
   public Vector3 InputDirection {
     set => this.inputDirection = value;
@@ -44,8 +49,12 @@ public class PlayerController : MonoBehaviour {
         Time.fixedDeltaTime * turnSpeed
       ));
       speed += moveSpeed;
+      autobrakeElapsed = 0.0f;
+      autobrakeStartSpeed = speed;
     } else {
-      speed = Mathf.Lerp(speed, 0.0f, 0.2f);
+      autobrakeElapsed += Time.fixedDeltaTime;
+      var pct = autobrakeElapsed / autoBrakeTime;
+      speed = Mathf.Lerp(autobrakeStartSpeed, 0.0f,  autobrakeCurve.Evaluate(pct));
     }
 
     if (hitCollider) {
