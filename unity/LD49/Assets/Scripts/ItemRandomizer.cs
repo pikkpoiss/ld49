@@ -7,6 +7,7 @@ public class ItemRandomizer : MonoBehaviour {
   [MinMaxSlider(0.1f, 10.0f)] public Vector2 massRange = new Vector2(0.5f, 1.3f);
   [MinMaxSlider(-5.0f, 5.0f)] public Vector2 rotationRange = new Vector2(-1.0f, 1.0f);
   [MinMaxSlider(-1.0f, 1.0f)] public Vector2 positionRange = new Vector2(-0.1f, 0.1f);
+  public bool changeColor = false;
 
   void Start() {
     // Randomize scale;
@@ -31,7 +32,9 @@ public class ItemRandomizer : MonoBehaviour {
     transform.position += position;
 
     // Randomize color;
-    var renderer = gameObject.GetComponent<MeshRenderer>();
-    renderer.material.color = Random.ColorHSV(0.0f, 0.1f);
+    if (changeColor) {
+      var renderer = gameObject.GetComponent<MeshRenderer>();
+      renderer.material.color = Random.ColorHSV(0.0f, 0.1f);
+    }
   }
 }
