@@ -403,7 +403,7 @@ MonoBehaviour:
   sourceBankPath: Assets/Sounds/FMOD/LD49/Build
   SourceBankPathUnformatted: 
   BankRefreshCooldown: 5
-  ShowBankRefreshWindow: 1
+  ShowBankRefreshWindow: 0
   AutomaticEventLoading: 1
   BankLoadType: 0
   AutomaticSampleLoading: 0
@@ -412,7 +412,7 @@ MonoBehaviour:
   TargetAssetPath: FMODBanks
   TargetBankFolder: 
   EventLinkage: 0
-  LoggingLevel: 2
+  LoggingLevel: 0
   SpeakerModeSettings: []
   SampleRateSettings: []
   LiveUpdateSettings: []
@@ -732,7 +732,7 @@ MonoBehaviour:
       HasValue: 1
     Overlay:
       Value: 0
-      HasValue: 0
+      HasValue: 1
     Logging:
       Value: 0
       HasValue: 0
