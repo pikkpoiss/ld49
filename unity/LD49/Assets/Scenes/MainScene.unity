@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.2850269, g: 0.3713935, b: 0.49601045, a: 1}
+  m_IndirectSpecularColor: {r: 0.28502667, g: 0.37139323, b: 0.49600998, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -745,8 +745,8 @@ GameObject:
   - component: {fileID: 529966207}
   - component: {fileID: 529966206}
   - component: {fileID: 529966209}
-  - component: {fileID: 529966210}
   - component: {fileID: 529966211}
+  - component: {fileID: 529966210}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -899,6 +899,7 @@ MonoBehaviour:
   gameLevelCompletedState: {fileID: 842370610}
   gameCompletedState: {fileID: 516083782}
   gameEndState: {fileID: 360097172}
+  musicManager: {fileID: 529966210}
 --- !u!114 &529966207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -949,31 +950,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 529966198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b682bbba1de34958b8250e6a5b9c546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
+  fmodEvent:
     Guid:
       Data1: -1237143715
       Data2: 1218908391
       Data3: 1859085203
       Data4: 1330334641
     Path: event:/LD49
-  Event: 
-  PlayEvent: 1
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params:
-  - Name: Score
-    Value: 0
-  - Name: Urgency
-    Value: 0
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!82 &529966211
 AudioSource:
   m_ObjectHideFlags: 0

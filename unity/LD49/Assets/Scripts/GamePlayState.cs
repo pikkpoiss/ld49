@@ -32,12 +32,16 @@ public class GamePlayState : GameStateMonoBehavior {
   private LevelInfo level { get => levels[currentLevel]; }
   private GameStateManager states;
 
+  public MusicManager musicManager;
+
   private void Start() {
     playerController = GetComponent<PlayerController>();
+    musicManager = GetComponent<MusicManager>();
     if (hud) {
       hud.gameObject.SetActive(true);
     }
     totalMoney = 0.0f;
+
     StartLevel();
   }
 
@@ -84,6 +88,7 @@ public class GamePlayState : GameStateMonoBehavior {
   private void CheckWinConditions() {
     if (currentDeliveries >= currentDeliveriesTarget) {
       Debug.Log("Won!");
+      musicManager.PlayVictoryMusic();
       currentLevel += 1;
       if (currentLevel >= levels.Length) {
         SetGameState(gameCompletedState);
@@ -98,7 +103,14 @@ public class GamePlayState : GameStateMonoBehavior {
   private void CheckLoseConditions() {
     if (timeRemaining <= 0.0f) {
       Debug.Log("Lost!");
+      musicManager.PlayFailureMusic();
       SetGameState(gameEndState);
+    }
+  }
+
+  private void CheckUrgency() {
+    if (timeRemaining > 0.0f && timeRemaining < 15.0f) {
+      musicManager.PlayUrgentMusic();
     }
   }
 
@@ -145,6 +157,7 @@ public class GamePlayState : GameStateMonoBehavior {
     UpdateHUD();
     UpdateGoal();
     CheckPackageConditions();
+    CheckUrgency();
     CheckWinConditions();
     CheckLoseConditions();
   }
