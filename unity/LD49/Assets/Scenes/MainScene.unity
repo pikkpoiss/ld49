@@ -1222,6 +1222,7 @@ MonoBehaviour:
   timeText: {fileID: 2110624329}
   moneyText: {fileID: 677996283}
   deliveriesText: {fileID: 2042187081}
+  dispatchText: {fileID: 1687765483}
 --- !u!1001 &183450236
 PrefabInstance:
   m_ObjectHideFlags: 0
