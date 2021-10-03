@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
   private Vector3 targetDirection = Vector3.zero;
   private Vector3 inputDirection = Vector3.zero;
   private Vector3 startLocation;
+  private AudioSource audioSource;
   private float speed = 0.0f;
   private bool hitCollider = false;
 
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour {
     if (body) {
       startLocation = body.transform.position;
     }
+
+    audioSource = GetComponent<AudioSource>();
   }
 
   void FixedUpdate() {
@@ -51,6 +54,11 @@ public class PlayerController : MonoBehaviour {
     } else {
       // Normal movement.
       body.MovePosition(body.position + body.rotation * (Vector3.forward * speed));
+    }
+
+    if (Input.GetKeyDown(KeyCode.H))
+    {
+      audioSource.Play();
     }
   }
 
