@@ -6,6 +6,10 @@ public class GameEndState : MonoBehaviour, IGameState {
   private float elapsed = 0.0f;
   public float minimumDelay = 1.0f;
 
+  void Start() {
+    gameObject.SetActive(false);
+  }
+
   private void OnEnable() {
     elapsed = 0.0f;
     Game.instance.states.PushState(this);
