@@ -18,13 +18,10 @@ public class Item : MonoBehaviour {
   private bool touchedGoal = false;
   private bool touchedGround = false;
   private bool playCollisionSound = false;
-  private bool playGoalSound = false;
   private Stickable stickable;
 
   public List<AudioClip> collisionSounds;
   public AudioSource audioSource;
-
-  public AudioClip goalSound;
 
   private AudioClip collisionSound;
 
@@ -38,10 +35,6 @@ public class Item : MonoBehaviour {
       PlayCollisionSound();
       playCollisionSound = false;
     }
-    if (playGoalSound) {
-      PlayGoalSound();
-      playGoalSound = false;
-    }
   }
 
   void OnCollisionEnter(Collision collision) {
@@ -54,6 +47,7 @@ public class Item : MonoBehaviour {
       StartCoroutine(AnimateDeath());
       playCollisionSound = true;
     } else if (collision.collider.CompareTag(PlayerTag)) {
+      playCollisionSound = true;
     }
   }
 
@@ -65,7 +59,6 @@ public class Item : MonoBehaviour {
         stickable.DestroySpring();
       }
       StartCoroutine(AnimateGoal(collider.transform.position));
-      playGoalSound = true;
     }
   }
 
@@ -117,11 +110,6 @@ public class Item : MonoBehaviour {
     int index = Random.Range(0, collisionSounds.Count);
     collisionSound = collisionSounds[index];
     audioSource.clip = collisionSound;
-    audioSource.Play();
-  }
-
-  private void PlayGoalSound() {
-    audioSource.clip = goalSound;
     audioSource.Play();
   }
 
