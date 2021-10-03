@@ -26,8 +26,11 @@ public class GamePlayState : GameStateMonoBehavior {
 
   private int currentLevel = 0;
   private LevelInfo[] levels = {
-    new LevelInfo(){ Seconds = 30, Deliveries = 5, MinPackages = 1, MaxPackages = 3 },
-    new LevelInfo(){ Seconds = 40, Deliveries = 8, MinPackages = 2, MaxPackages = 5 },
+    new LevelInfo(){ Seconds = 60, Deliveries = 3, MinPackages = 1, MaxPackages = 3 },
+    new LevelInfo(){ Seconds = 60, Deliveries = 4, MinPackages = 3, MaxPackages = 5 },
+    new LevelInfo(){ Seconds = 60, Deliveries = 5, MinPackages = 3, MaxPackages = 7 },
+    new LevelInfo(){ Seconds = 90, Deliveries = 6, MinPackages = 4, MaxPackages = 8 },
+    new LevelInfo(){ Seconds = 90, Deliveries = 7, MinPackages = 5, MaxPackages = 9 },
   };
   private LevelInfo level { get => levels[currentLevel]; }
   private GameStateManager states;

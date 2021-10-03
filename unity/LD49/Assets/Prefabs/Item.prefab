@@ -129,9 +129,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   createSpring: 1
-  maxBreakForce: 1000
-  minBreakForce: 100
-  springForce: 1000
+  maxBreakForce: 15000
+  minBreakForce: 200
+  springForce: 2000
   maxStackDepth: 10
   breakForceCurve:
     serializedVersion: 2

@@ -3477,6 +3477,9 @@ GameObject:
   - component: {fileID: 529966211}
   - component: {fileID: 529966210}
   - component: {fileID: 529966204}
+  - component: {fileID: 529966207}
+  - component: {fileID: 529966212}
+  - component: {fileID: 529966209}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3605,21 +3608,21 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: -3.0579123
-      outSlope: -3.0579123
+      value: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.1125
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: -0.07738496
-      outSlope: -0.07738496
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.31666666
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -3637,9 +3640,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   createSpring: 0
-  maxBreakForce: 400
+  maxBreakForce: 100000
   minBreakForce: 100
-  springForce: 1500
+  springForce: 2000
   maxStackDepth: 10
   breakForceCurve:
     serializedVersion: 2
@@ -3647,7 +3650,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  wasStacked: 0
+  wasStacked: 1
   stackDepth: 0
 --- !u!54 &529966205
 Rigidbody:
@@ -3661,7 +3664,7 @@ Rigidbody:
   m_Drag: 1
   m_AngularDrag: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
@@ -3683,6 +3686,19 @@ MonoBehaviour:
   gameCompletedState: {fileID: 516083782}
   gameEndState: {fileID: 360097172}
   musicManager: {fileID: 529966210}
+--- !u!65 &529966207
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529966198}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &529966208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3697,6 +3713,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 3816094081880542840, guid: 9a1f77c895c684544b9750bc44f9de8b, type: 3}
   startHeight: 8
+--- !u!65 &529966209
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529966198}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1285038, y: 1, z: 1}
+  m_Center: {x: 0.56, y: 1.12, z: 0}
 --- !u!114 &529966210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3812,6 +3841,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &529966212
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529966198}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1285038, y: 1, z: 1}
+  m_Center: {x: -0.619658, y: 1.12, z: 0}
 --- !u!1 &533134322
 GameObject:
   m_ObjectHideFlags: 0
