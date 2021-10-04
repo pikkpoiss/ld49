@@ -33,6 +33,7 @@ public class GameSplashState : MonoBehaviour, IGameState {
 
   public void StateUpdate(GameStateManager states) {
     if (Input.GetButtonUp(AdvanceButton)) {
+      Game.instance.ResumeAudio();
       Advance();
     }
   }

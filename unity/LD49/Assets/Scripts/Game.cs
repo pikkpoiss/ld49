@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour {
+  private bool audioResumed = false;
+
   public static Game instance = null;
   public GameStateManager states;
   public GamePlayState playState;
@@ -29,6 +31,17 @@ public class Game : MonoBehaviour {
 #else
       return false;
 #endif
+    }
+  }
+
+  // See https://alessandrofama.com/tutorials/fmod-unity/fix-blocked-audio-browsers/
+  public void ResumeAudio() {
+    if (!audioResumed) {
+      var result = FMODUnity.RuntimeManager.CoreSystem.mixerSuspend();
+      Debug.Log(result);
+      result = FMODUnity.RuntimeManager.CoreSystem.mixerResume();
+      Debug.Log(result);
+      audioResumed = true;
     }
   }
 
