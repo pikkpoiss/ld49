@@ -10,11 +10,14 @@ public struct LevelInfo {
 
 [RequireComponent(typeof(PlayerController))]
 public class GamePlayState : GameStateMonoBehavior {
+  public const string MenuButton = "Menu";
+
   public GamePlayHUD hud;
   public Goal goal;
   public GameLevelCompletedState gameLevelCompletedState;
   public GameCompletedState gameCompletedState;
   public GameEndState gameEndState;
+  public GamePauseState gamePauseState;
 
   private PlayerController playerController;
   private float timeRemaining;
@@ -188,6 +191,13 @@ public class GamePlayState : GameStateMonoBehavior {
           timeRemaining -= 5;
         }
       }
+
+      // Pause menu
+      if (Input.GetButtonUp(MenuButton)) {
+        gamePauseState.SetText(string.Format("You've delivered {0} packages, lost {1} and earned ${2:F2} this week!", totalPackages, totalLosses, totalMoney));
+        SetGameState(gamePauseState);
+      }
+
       timeRemaining -= Time.deltaTime;
     }
     UpdateHUD();
