@@ -1,8 +1,9 @@
 using UnityEngine;
+using TMPro;
 
 public class GameCompletedState : GameStateMonoBehavior {
-  public GameObject quitButton;
   public const string AdvanceButton = "Fire1";
+  public TextMeshProUGUI textMesh;
 
   private GameStateManager stateManager;
 
@@ -30,8 +31,13 @@ public class GameCompletedState : GameStateMonoBehavior {
 
   public override void StateUpdate(GameStateManager states) {
     if (Input.GetButtonUp(AdvanceButton)) {
-      states.PopState();
       Game.instance.Reload();
+    }
+  }
+
+  public void SetText(string text) {
+    if (textMesh) {
+      textMesh.text = text;
     }
   }
 }

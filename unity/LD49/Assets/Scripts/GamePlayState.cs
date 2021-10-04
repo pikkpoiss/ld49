@@ -19,6 +19,8 @@ public class GamePlayState : GameStateMonoBehavior {
   private PlayerController playerController;
   private float timeRemaining;
   private float totalMoney;
+  private int totalLosses;
+  private int totalPackages;
 
   private int currentDeliveries;
   private int currentDeliveriesTarget;
@@ -47,7 +49,8 @@ public class GamePlayState : GameStateMonoBehavior {
       hud.gameObject.SetActive(true);
     }
     totalMoney = 0.0f;
-
+    totalLosses = 0;
+    totalPackages = 0;
     StartLevel();
   }
 
@@ -83,7 +86,12 @@ public class GamePlayState : GameStateMonoBehavior {
     if (!goal) {
       return;
     }
-    goal.SetBuildingText(string.Format("{0}/{1}", currentPackages, currentPackagesTarget));
+    var remaining = Mathf.Clamp(currentPackagesTarget - currentPackages, 0, currentPackagesTarget);
+    if (remaining > 0) {
+      goal.SetBuildingText(string.Format("{0}", remaining));
+    } else {
+      goal.SetBuildingText("");
+    }
   }
 
   private void CheckPackageConditions() {
@@ -104,15 +112,15 @@ public class GamePlayState : GameStateMonoBehavior {
   }
 
   private IEnumerator HandleLevelCompleted() {
-    Debug.Log("Won!");
     playerController.StopEngineSound();
     musicManager.PlayVictoryMusic();
     yield return new WaitForSeconds(1.0f);
     currentLevel += 1;
     if (currentLevel >= levels.Length) {
+      gameCompletedState.SetText(string.Format("You really got me out of a jam, kid! You delivered {0} packages, lost {1} and earned ${0:F2} this week!", totalPackages, totalLosses, totalMoney));
       SetGameState(gameCompletedState);
-      Debug.Log("Won game!");
     } else {
+      gameLevelCompletedState.SetText(string.Format("Nice work kid, but tomorrow we have to make {0} deliveries!", level.Deliveries));
       SetGameState(gameLevelCompletedState);
       StartLevel();
     }
@@ -126,6 +134,7 @@ public class GamePlayState : GameStateMonoBehavior {
       Debug.Log("Lost!");
       playerController.StopEngineSound();
       musicManager.PlayFailureMusic();
+      gameEndState.SetText(string.Format("You let me down, kid! You only delivered {0} packages and lost {1}! Take your ${0:F2} and get outta here!", totalPackages, totalLosses, totalMoney));
       SetGameState(gameEndState);
     }
   }
@@ -192,10 +201,12 @@ public class GamePlayState : GameStateMonoBehavior {
   public void ReportDelivery(Item item) {
     currentPackages += 1;
     totalMoney += item.GetValue();
+    totalPackages += 1;
   }
 
   public void ReportLoss(Item item) {
     totalMoney -= 5.0f;
+    totalLosses += 1;
   }
 
   private void SetGameState(GameStateMonoBehavior state) {

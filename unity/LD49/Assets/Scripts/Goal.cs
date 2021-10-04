@@ -22,11 +22,6 @@ public class Goal : MonoBehaviour {
   }
 
   public void Update() {
-    // TODO: Remove before shipping!
-    if (Input.GetKeyUp(KeyCode.Alpha2)) {
-      PickBuilding();
-    }
-
     if (playGoalSound) {
       audioSource.Play();
       playGoalSound = false;
@@ -69,12 +64,14 @@ public class Goal : MonoBehaviour {
       icon.transform.position = iconPosition;
     }
 
+    /*
     // Move the building text.
     if (buildingText) {
       var textPosition = buildingText.transform.position;
       textPosition.y = boxCollider.size.y + 4.0f;
       buildingText.transform.position = textPosition;
     }
+    */
   }
 
   void OnTriggerEnter(Collider collider) {
@@ -91,7 +88,7 @@ public class Goal : MonoBehaviour {
     if (text != "") {
       buildingText.gameObject.SetActive(true);
       buildingText.text = text;
-      buildingText.gameObject.transform.rotation = Camera.main.transform.rotation;
+      // buildingText.gameObject.transform.rotation = Camera.main.transform.rotation;
     } else {
       buildingText.gameObject.SetActive(false);
     }

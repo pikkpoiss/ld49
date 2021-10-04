@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameEndState : GameStateMonoBehavior {
-  public Text pointsText;
   private float elapsed = 0.0f;
   public float minimumDelay = 1.0f;
+  public const string AdvanceButton = "Fire1";
+  public TextMeshProUGUI textMesh;
 
   void Awake() {
     gameObject.SetActive(false);
@@ -27,14 +29,15 @@ public class GameEndState : GameStateMonoBehavior {
     if (elapsed < minimumDelay) {
       elapsed += Time.deltaTime;
     } else {
-      if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {
-        states.PopState();
+      if (Input.GetButtonUp(AdvanceButton)) {
         Game.instance.Reload();
       }
     }
   }
 
-  public void SetPoints(int points) {
-    pointsText.text = string.Format("You scored {0} points!", points);
+  public void SetText(string text) {
+    if (textMesh) {
+      textMesh.text = text;
+    }
   }
 }

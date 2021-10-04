@@ -1,7 +1,9 @@
 using UnityEngine;
+using TMPro;
 
 public class GameLevelCompletedState : GameStateMonoBehavior {
   public const string AdvanceButton = "Fire1";
+  public TextMeshProUGUI textMesh;
 
   private GameStateManager stateManager;
 
@@ -30,6 +32,12 @@ public class GameLevelCompletedState : GameStateMonoBehavior {
   public override void StateUpdate(GameStateManager states) {
     if (Input.GetButtonUp(AdvanceButton)) {
       stateManager.PopState();
+    }
+  }
+
+  public void SetText(string text) {
+    if (textMesh) {
+      textMesh.text = text;
     }
   }
 }

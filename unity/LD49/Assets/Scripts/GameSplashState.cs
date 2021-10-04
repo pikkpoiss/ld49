@@ -1,7 +1,6 @@
 using UnityEngine;
 
 public class GameSplashState : MonoBehaviour, IGameState {
-  public GameObject quitButton;
   public const string AdvanceButton = "Fire1";
 
   private GameStateManager stateManager;
