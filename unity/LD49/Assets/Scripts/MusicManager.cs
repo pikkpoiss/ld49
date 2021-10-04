@@ -4,37 +4,34 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-  private FMOD.Studio.EventInstance fmodInstance;
-
-  public FMODUnity.EventReference fmodEvent;
+  public FMODUnity.StudioEventEmitter fmodEventEmitter;
 
   void Start()
   {
-    fmodInstance = FMODUnity.RuntimeManager.CreateInstance(fmodEvent);
-    fmodInstance.start();
+    fmodEventEmitter = GetComponent<FMODUnity.StudioEventEmitter>();
   }
     
   public void PlayUrgentMusic()
   {
-    fmodInstance.setParameterByName("Urgency", 0.5f);
+    fmodEventEmitter.SetParameter("Urgency", 0.5f);
   }
 
   public void PlayVictoryMusic()
   {
-    fmodInstance.setParameterByName("Urgency", 0.0f);
-    fmodInstance.setParameterByName("Victory", 0.75f);
+    fmodEventEmitter.SetParameter("Urgency", 0.0f);
+    fmodEventEmitter.SetParameter("Victory", 0.75f);
   }
 
   public void PlayFailureMusic()
   {
-    fmodInstance.setParameterByName("Urgency", 0.0f);
-    fmodInstance.setParameterByName("Victory", 0.25f);
+    fmodEventEmitter.SetParameter("Urgency", 0.0f);
+    fmodEventEmitter.SetParameter("Victory", 0.25f);
   }
 
   public void ResetMusic()
   {
-    fmodInstance.setParameterByName("Urgency", 0.0f);
-    fmodInstance.setParameterByName("Victory", 0.0f);
-    fmodInstance.start();
+    Debug.Log("ResetMusic");
+    fmodEventEmitter.SetParameter("Urgency", 0.0f);
+    fmodEventEmitter.SetParameter("Victory", 0.0f);
   }
 }
