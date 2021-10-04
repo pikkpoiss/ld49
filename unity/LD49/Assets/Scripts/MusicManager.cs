@@ -33,5 +33,6 @@ public class MusicManager : MonoBehaviour
     Debug.Log("ResetMusic");
     fmodEventEmitter.SetParameter("Urgency", 0.0f);
     fmodEventEmitter.SetParameter("Victory", 0.0f);
+    fmodEventEmitter.Play();
   }
 }
