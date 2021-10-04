@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour {
   private Vector3 inputDirection = Vector3.zero;
   private Vector3 startLocation;
   private Quaternion startRotation;
-  private AudioSource audioSource;
+  private AudioSource carHornAudioSource;
+  private AudioSource carEngineAudioSource;
   private float speed = 0.0f;
   private bool hitCollider = false;
   private float speedElapsed = 0.0f;
@@ -38,7 +39,10 @@ public class PlayerController : MonoBehaviour {
       startRotation = body.transform.rotation;
     }
 
-    audioSource = GetComponent<AudioSource>();
+    carHornAudioSource = GetComponent<AudioSource>();
+
+    GameObject van = this.transform.Find("Van").gameObject;
+    carEngineAudioSource = van.GetComponent<AudioSource>();
   }
 
   void FixedUpdate() {
@@ -55,6 +59,7 @@ public class PlayerController : MonoBehaviour {
         isAccelerating = true;
         speedElapsed = 0.0f;
         startSpeed = speed;
+        PlayEngineSound();
       }
       speedElapsed += Time.fixedDeltaTime;
       speedElapsed = Mathf.Clamp(speedElapsed, 0.0f, accelerationTime);
@@ -65,6 +70,7 @@ public class PlayerController : MonoBehaviour {
         isAccelerating = false;
         speedElapsed = 0.0f;
         startSpeed = speed;
+        StopEngineSound();
       }
       speedElapsed += Time.fixedDeltaTime;
       speedElapsed = Mathf.Clamp(speedElapsed, 0.0f, brakingTime);
@@ -85,7 +91,7 @@ public class PlayerController : MonoBehaviour {
 
 
     if (Input.GetKeyDown(KeyCode.H)) {
-      audioSource.Play();
+      PlayCarHornSound();
     }
   }
 
@@ -104,6 +110,18 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
+  private void PlayEngineSound() {
+    carEngineAudioSource.Play();
+  }
+
+  public void StopEngineSound() {
+    carEngineAudioSource.Stop();
+  }
+
+  private void PlayCarHornSound() {
+    carHornAudioSource.Play();
+  }
+
   public void Reset() {
     Debug.Log("Player reset");
     body.MovePosition(startLocation);
@@ -112,5 +130,6 @@ public class PlayerController : MonoBehaviour {
     gameObject.transform.rotation = startRotation;
     inputDirection = Vector3.zero;
     speed = 0.0f;
+    StopEngineSound();
   }
 }
