@@ -117,7 +117,7 @@ public class GamePlayState : GameStateMonoBehavior {
     yield return new WaitForSeconds(1.0f);
     currentLevel += 1;
     if (currentLevel >= levels.Length) {
-      gameCompletedState.SetText(string.Format("You really got me out of a jam, kid! You delivered {0} packages, lost {1} and earned ${0:F2} this week!", totalPackages, totalLosses, totalMoney));
+      gameCompletedState.SetText(string.Format("You really got me out of a jam, kid! You delivered {0} packages, lost {1} and earned ${2:F2} this week!", totalPackages, totalLosses, totalMoney));
       SetGameState(gameCompletedState);
     } else {
       gameLevelCompletedState.SetText(string.Format("Nice work kid, but tomorrow we have to make {0} deliveries!", level.Deliveries));
@@ -134,7 +134,7 @@ public class GamePlayState : GameStateMonoBehavior {
       Debug.Log("Lost!");
       playerController.StopEngineSound();
       musicManager.PlayFailureMusic();
-      gameEndState.SetText(string.Format("You let me down, kid! You only delivered {0} packages and lost {1}! Take your ${0:F2} and get outta here!", totalPackages, totalLosses, totalMoney));
+      gameEndState.SetText(string.Format("You let me down, kid! You only delivered {0} packages and lost {1}! Take your ${2:F2} and get outta here!", totalPackages, totalLosses, totalMoney));
       SetGameState(gameEndState);
     }
   }
