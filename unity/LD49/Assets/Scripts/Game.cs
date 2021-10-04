@@ -81,7 +81,11 @@ public class Game : MonoBehaviour {
       return;
     }
 
+#if UNITY_WEBGL
+    Application.targetFrameRate = 30;
+#else
     Application.targetFrameRate = 60;
+#endif
 
     states = new GameStateManager();
     states.PushState(playState);
