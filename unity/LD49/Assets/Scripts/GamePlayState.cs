@@ -105,6 +105,7 @@ public class GamePlayState : GameStateMonoBehavior {
 
   private IEnumerator HandleLevelCompleted() {
     Debug.Log("Won!");
+    playerController.StopEngineSound();
     musicManager.PlayVictoryMusic();
     yield return new WaitForSeconds(1.0f);
     currentLevel += 1;
@@ -123,6 +124,7 @@ public class GamePlayState : GameStateMonoBehavior {
     }
     if (timeRemaining <= 0.0f) {
       Debug.Log("Lost!");
+      playerController.StopEngineSound();
       musicManager.PlayFailureMusic();
       SetGameState(gameEndState);
     }
