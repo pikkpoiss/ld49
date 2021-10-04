@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: be6585e4f86f05544b461356be694bbd
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Amazon Ember
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 9eefd9721addc394e8598e3779609e69, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
